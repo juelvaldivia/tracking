@@ -1,12 +1,12 @@
 package sql
 
 import (
-	"tracking/database/interfaces"
-	"tracking/database/sql/stores"
+	interfaces "tracking/database/interfaces"
+	usersStore "tracking/database/sql/stores"
 )
 
 type SqlDatabase struct {
-	usersStore databaseInterfaces.UsersStore
+	usersStore interfaces.UsersStore
 }
 
 func New() *SqlDatabase {
@@ -15,6 +15,6 @@ func New() *SqlDatabase {
 	}
 }
 
-func (database *SqlDatabase) Users() databaseInterfaces.UsersStore {
+func (database *SqlDatabase) Users() interfaces.UsersStore {
 	return database.usersStore
 }

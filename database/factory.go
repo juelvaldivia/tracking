@@ -1,20 +1,16 @@
-package tracking_database
+package database
 
 import (
-	"fmt"
-	"errors"
+	errors "errors"
+	fmt "fmt"
 
-	"tracking/config"
-	"tracking/database/interfaces"
-	"tracking/database/memory"
-	"tracking/database/sql"
+	config "tracking/config"
+	interfaces "tracking/database/interfaces"
+	memory "tracking/database/memory"
+	sql "tracking/database/sql"
 )
 
-var (
-	FactoryDatabaseError = errors.New("error building database")
-	UnsupportedDatabase = errors.New("unsupported database type")
-  InvalidConfig       = errors.New("invalid database configuration")
-)
+var ErrUnsupportedDatabase = errors.New("unsupported database type")
 
 type Factory struct {
 	Config config.Config
@@ -26,26 +22,22 @@ func NewFactory(configuration config.Config) *Factory {
 	}
 }
 
-func (factory *Factory) BuildDatabase() (databaseInterfaces.Database, error) {
+func (factory *Factory) BuildDatabase() (interfaces.Database, error) {
 	driver := factory.Config.DatabaseDriver
 
-	var database databaseInterfaces.Database
-  var err error
+	var database interfaces.Database
 
 	switch driver {
 	case "memory":
 		database = memory.New()
 	case "sql":
 		sqlConfig := factory.Config.SQLDatabase
+		// TODO: implement SQLConfig
 		fmt.Println(sqlConfig)
 
 		database = sql.New()
 	default:
-		return nil, fmt.Errorf("%w: %s", UnsupportedDatabase, driver)
-	}
-
-	if err != nil {
-		return nil, fmt.Errorf("%w: %v", FactoryDatabaseError, err)
+		return nil, ErrUnsupportedDatabase
 	}
 
 	return database, nil

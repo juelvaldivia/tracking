@@ -1,20 +1,21 @@
 package config
 
 import (
-	"fmt"
-	"errors"
+	errors "errors"
+	fmt "fmt"
 
-	"github.com/spf13/viper"
+	viper "github.com/spf13/viper"
 )
 
 var (
-	FailedReadConfigFile 			= errors.New("failed to read config file")
-	FailedBuildConfig 				= errors.New("failed to unmarshal config")
+	FailedReadConfigFile      = errors.New("failed to read config file")
+	FailedBuildConfig         = errors.New("failed to unmarshal config")
 	MissingDatabaseConfigKeys = errors.New("missing required keys in sql_database configuration")
 )
 
 type Config struct {
-	DatabaseDriver string `mapstructure:"database_driver"`
+	ApiPort        int       `mapstructure:"api_port"`
+	DatabaseDriver string    `mapstructure:"database_driver"`
 	SQLDatabase    SQLConfig `mapstructure:"sql_database"`
 }
 

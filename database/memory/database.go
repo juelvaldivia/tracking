@@ -1,12 +1,12 @@
 package memory
 
 import (
-	"tracking/database/interfaces"
-	"tracking/database/memory/stores"
+	interfaces "tracking/database/interfaces"
+	usersStore "tracking/database/memory/stores"
 )
 
 type MemoryDatabase struct {
-	usersStore databaseInterfaces.UsersStore
+	usersStore interfaces.UsersStore
 }
 
 func New() *MemoryDatabase {
@@ -15,6 +15,6 @@ func New() *MemoryDatabase {
 	}
 }
 
-func (database *MemoryDatabase) Users() databaseInterfaces.UsersStore {
+func (database *MemoryDatabase) Users() interfaces.UsersStore {
 	return database.usersStore
 }

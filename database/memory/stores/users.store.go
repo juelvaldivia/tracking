@@ -1,14 +1,12 @@
 package usersStore
 
 import (
-	"errors"
+	errors "errors"
 
-	"tracking/app/entities"
+	entities "tracking/app/entities"
 )
 
-var (
-	UserNotFound = errors.New("user not found")
-)
+var ErrUserNotFound = errors.New("user not found")
 
 type UsersStore struct {
 	Users map[string]entities.User
@@ -18,6 +16,16 @@ func New() *UsersStore {
 	return &UsersStore{
 		Users: make(map[string]entities.User),
 	}
+}
+
+func (store *UsersStore) All() ([]entities.User, error) {
+	usersList := make([]entities.User, 0, len(store.Users))
+
+	for _, user := range store.Users {
+		usersList = append(usersList, user)
+	}
+
+	return usersList, nil
 }
 
 func (store *UsersStore) Create(user entities.User) error {
@@ -30,5 +38,5 @@ func (store *UsersStore) FindById(id string) (entities.User, error) {
 		return user, nil
 	}
 
-	return entities.User{}, UserNotFound
+	return entities.User{}, ErrUserNotFound
 }

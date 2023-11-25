@@ -1,12 +1,13 @@
 package main
 
-
 import (
-	"fmt"
+	fmt "fmt"
 
-	"tracking/app"
-	"tracking/config"
-	"tracking/database"
+	api "tracking/api"
+	app "tracking/app"
+	config "tracking/config"
+	database "tracking/database"
+	server "tracking/server"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 		return
 	}
 
-	databaseFactory := tracking_database.NewFactory(configuration)
+	databaseFactory := database.NewFactory(configuration)
 	database, err := databaseFactory.BuildDatabase()
 
 	if err != nil {
@@ -26,5 +27,12 @@ func main() {
 	}
 
 	trackingApp := app.New(configuration, database)
-	trackingApp.Start()
+	apiInstance := api.New(trackingApp)
+	server := server.NewServerHTTP(configuration.ApiPort, apiInstance.Router)
+
+	serverError := server.Listen()
+
+	if serverError != nil {
+		fmt.Printf("Error starting server: %v\n", err)
+	}
 }

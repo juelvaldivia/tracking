@@ -1,3 +1,4 @@
+api_port: 5678
 database_driver: memory
 sql_database:
   host: localhost

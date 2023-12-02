@@ -1,3 +1,5 @@
+[![Deploy](https://github.com/juelvaldivia/tracking/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/juelvaldivia/tracking/actions/workflows/ci.yml)
+
 # GPS Tracking in Go
 Welcome to the GPS Tracking project in Go! This project aims to provide a robust and efficient solution for GPS device tracking.
 

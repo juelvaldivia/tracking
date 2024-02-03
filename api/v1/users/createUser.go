@@ -16,7 +16,7 @@ func (controller *UsersController) CreateUser(response http.ResponseWriter, requ
 		return
 	}
 
-	user, err := controller.App.CreateUser(newUser.Id, newUser.Name, newUser.User, newUser.Password)
+	user, err := controller.App.CreateUser(newUser.Id, newUser.Name, newUser.Username, newUser.Password)
 
 	if err != nil {
 		http.Error(response, err.Error(), http.StatusInternalServerError)

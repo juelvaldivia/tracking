@@ -4,6 +4,8 @@ import (
 	errors "errors"
 
 	entities "tracking/app/entities"
+
+	"github.com/google/uuid"
 )
 
 var ErrUserNotFound = errors.New("user not found")
@@ -29,12 +31,12 @@ func (store *UsersStore) All() ([]entities.User, error) {
 }
 
 func (store *UsersStore) Create(user entities.User) error {
-	store.Users[user.Id] = user
+	store.Users[user.Id.String()] = user
 	return nil
 }
 
-func (store *UsersStore) FindById(id string) (entities.User, error) {
-	if user, exists := store.Users[id]; exists {
+func (store *UsersStore) FindById(id uuid.UUID) (entities.User, error) {
+	if user, exists := store.Users[id.String()]; exists {
 		return user, nil
 	}
 

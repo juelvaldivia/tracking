@@ -2,7 +2,6 @@ package database
 
 import (
 	errors "errors"
-	fmt "fmt"
 
 	config "tracking/config"
 	interfaces "tracking/database/interfaces"
@@ -32,10 +31,14 @@ func (factory *Factory) BuildDatabase() (interfaces.Database, error) {
 		database = memory.New()
 	case "sql":
 		sqlConfig := factory.Config.SQLDatabase
-		// TODO: implement SQLConfig
-		fmt.Println(sqlConfig)
 
-		database = sql.New()
+		database, err := sql.New(sqlConfig)
+
+		if err != nil {
+			return nil, ErrUnsupportedDatabase
+		}
+
+		return database, nil
 	default:
 		return nil, ErrUnsupportedDatabase
 	}

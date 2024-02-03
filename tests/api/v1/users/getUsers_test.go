@@ -8,6 +8,7 @@ import (
 	"tracking/app/entities"
 	"tracking/tests/api/helpers"
 
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -35,7 +36,7 @@ func TestReturnEmptyUsers(t *testing.T) {
 func TestReturnSingleUser(t *testing.T) {
 	api := helpers.CreateAPI(t)
 
-	_, err := api.App.CreateUser("1", "John Doe", "john_doe", "password123")
+	_, err := api.App.CreateUser(uuid.New(), "John Doe", "john_doe", "password123")
 	assert.NoError(t, err, "Error creating user")
 
 	response := helpers.Request(api.Router, "GET", "/api/v1/users", nil)
@@ -61,10 +62,10 @@ func TestReturnSingleUser(t *testing.T) {
 func TestReturnMultipleUsers(t *testing.T) {
 	api := helpers.CreateAPI(t)
 
-	_, err := api.App.CreateUser("1", "John Doe", "john_doe", "password123")
+	_, err := api.App.CreateUser(uuid.New(), "John Doe", "john_doe", "password123")
 	assert.NoError(t, err, "Error creating user 1")
 
-	_, err = api.App.CreateUser("2", "Jane Doe", "jane_doe", "password456")
+	_, err = api.App.CreateUser(uuid.New(), "Jane Doe", "jane_doe", "password456")
 	assert.NoError(t, err, "Error creating user 2")
 
 	response := helpers.Request(api.Router, "GET", "/api/v1/users", nil)

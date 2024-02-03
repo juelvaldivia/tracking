@@ -4,17 +4,19 @@ import (
 	fmt "fmt"
 
 	entities "tracking/app/entities"
+
+	"github.com/google/uuid"
 )
 
 func (app *App) FindAllUsers() ([]entities.User, error) {
 	return app.Database.Users().All()
 }
 
-func (app *App) CreateUser(id string, name string, username string, password string) (entities.User, error) {
+func (app *App) CreateUser(id uuid.UUID, name string, username string, password string) (entities.User, error) {
 	newUser := entities.User{
 		Id:       id,
 		Name:     name,
-		User:     username,
+		Username: username,
 		Password: password,
 	}
 
@@ -26,7 +28,7 @@ func (app *App) CreateUser(id string, name string, username string, password str
 	return newUser, nil
 }
 
-func (app *App) FindUserById(id string) entities.User {
+func (app *App) FindUserById(id uuid.UUID) entities.User {
 	user, user_error := app.Database.Users().FindById(id)
 
 	if user_error != nil {

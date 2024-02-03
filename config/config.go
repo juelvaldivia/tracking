@@ -22,9 +22,9 @@ type Config struct {
 type SQLConfig struct {
 	Host     string `mapstructure:"host"`
 	Port     int    `mapstructure:"port"`
-	Username string `mapstructure:"username"`
-	Password string `mapstructure:"password"`
 	Database string `mapstructure:"database"`
+	User     string `mapstructure:"user"`
+	Password any    `mapstructure:"password"`
 }
 
 func LoadConfig(configPath string) (Config, error) {
@@ -59,11 +59,12 @@ func readAndUnmarshalConfig(configPath string, configuration *Config) error {
 }
 
 func validateSQLDatabaseConfig(sqlConfig SQLConfig) error {
+
 	if sqlConfig.Host == "" ||
 		sqlConfig.Port == 0 ||
-		sqlConfig.Username == "" ||
-		sqlConfig.Password == "" ||
-		sqlConfig.Database == "" {
+		sqlConfig.User == "" ||
+		sqlConfig.Database == "" ||
+		(sqlConfig.Password != nil && sqlConfig.Password == "") {
 		return fmt.Errorf("%w expected: %v", MissingDatabaseConfigKeys, expectDatabaseConfig())
 	}
 
@@ -75,8 +76,8 @@ func expectDatabaseConfig() string {
 	sql_database:
   	  host: localhost
   	  port: 5432
-  	  username: your_username
-  	  password: your_password
   	  database: your_database
+  	  user: your_username
+  	  password: your_password
 	`
 }

@@ -10,7 +10,7 @@ func (controller *UsersController) GetUsers(response http.ResponseWriter, reques
 	result, err := controller.App.FindAllUsers()
 
 	if err != nil {
-		responses.Json(response, http.StatusInternalServerError, nil)
+		responses.Json(response, http.StatusInternalServerError, err.Error())
 		return
 	}
 

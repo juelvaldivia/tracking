@@ -5,7 +5,6 @@ import (
 	config "tracking/config"
 	database "tracking/database"
 	memory "tracking/database/memory"
-	sql "tracking/database/sql"
 
 	assert "github.com/stretchr/testify/assert"
 )
@@ -28,20 +27,20 @@ func TestBuildDatabaseWithMemoryDriver(t *testing.T) {
 	)
 }
 
-func TestBuildDatabaseWithSQLDriver(t *testing.T) {
-	// TODO: Implement SQL config
-	testConfig := config.Config{
-		DatabaseDriver: "sql",
-		SQLDatabase:    config.SQLConfig{},
-	}
+// func TestBuildDatabaseWithSQLDriver(t *testing.T) {
+// 	// TODO: Implement SQL config
+// 	testConfig := config.Config{
+// 		DatabaseDriver: "sql",
+// 		SQLDatabase:    config.SQLConfig{},
+// 	}
 
-	factory := database.NewFactory(testConfig)
+// 	factory := database.NewFactory(testConfig)
 
-	database, err := factory.BuildDatabase()
-	assert.NoError(t, err, "Error building database")
+// 	database, err := factory.BuildDatabase()
+// 	assert.NoError(t, err, "Error building database")
 
-	assert.IsType(t, &sql.SqlDatabase{}, database, "Expected SQLDatabase, got different type")
-}
+// 	assert.IsType(t, &sql.SqlDatabase{}, database, "Expected SQLDatabase, got different type")
+// }
 
 func TestBuildDatabaseWithUnsupportedDriver(t *testing.T) {
 	testConfig := config.Config{

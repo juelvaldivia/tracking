@@ -49,7 +49,43 @@ The behavior of the application is determined by the `config.yml` file, where yo
     database: your_database
   ```
 
+# Migrations
+
+- This project uses golang migrate you can review the page of [go migrations](https://github.com/golang-migrate/migrate)
+
+- To install [go migrate](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate)
+
+- Mac
+```bash
+$ brew install golang-migrate
+or
+$ arch -arm64 brew install golang-migrate
+```
+
+- Windows using scoop
+```bash
+$ scoop install migrate
+```
+
+- Linux (*.deb package)
+```bash
+$ curl -L https://packagecloud.io/golang-migrate/migrate/gpgkey | apt-key add -
+$ echo "deb https://packagecloud.io/golang-migrate/migrate/ubuntu/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/migrate.list
+$ apt-get update
+$ apt-get install -y migrate
+```
 # Usage
+
+- Build the database using docker
+    ```bash
+    $ make postgres
+    ```
+
+- Build the tracking database and run migrations
+    ```bash
+    $ make database
+    $ make migrate
+    ```
 
 - Run the application:
     ```bash
@@ -65,11 +101,20 @@ The behavior of the application is determined by the `config.yml` file, where yo
 ```bash
 golangci-lint run
 ```
-
+or you can use make
+```bash
+make lint
+```
 ## Tests
 - Run test
  ```bash
   go test -v ./tests/...
+ ```
+
+ or use make
+
+  ```bash
+  make test
  ```
 
 # Acknowledgments
